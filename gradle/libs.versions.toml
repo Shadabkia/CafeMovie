@@ -1,5 +1,8 @@
 [versions]
 agp = "8.1.2"
+appcompat = "1.6.1"
+constraintlayout = "2.1.4"
+material = "1.11.0"
 org-jetbrains-kotlin-android = "1.9.10"
 kotlinx-coroutines-core = "1.7.3"
 core-ktx = "1.12.0"
@@ -34,6 +37,9 @@ timber = "5.0.1"
 #androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
 #androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle-runtime-ktx" }
 
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 
 #room
@@ -42,6 +48,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-com
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-compiler" }
 
 #retrofit
+material = { module = "com.google.android.material:material", version.ref = "material" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
