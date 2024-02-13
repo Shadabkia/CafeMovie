@@ -21,6 +21,7 @@ hilt-android = "2.48.1"
 hilt-compiler = "2.48.1"
 #hilt-navigation-compose = "1.1.0"
 room-compiler = "2.6.1"
+timber = "5.0.1"
 
 [libraries]
 
@@ -61,6 +62,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 #ui compose
 #activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
