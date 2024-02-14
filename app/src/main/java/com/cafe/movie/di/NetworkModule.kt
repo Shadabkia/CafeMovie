@@ -62,9 +62,9 @@ object NetworkModule {
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
             .addInterceptor(networkConnectionInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS) // connect timeout
-            .writeTimeout(30, TimeUnit.SECONDS) // write timeout
-            .readTimeout(30, TimeUnit.SECONDS) // read timeout
+            .connectTimeout(10, TimeUnit.SECONDS) // connect timeout
+            .writeTimeout(10, TimeUnit.SECONDS) // write timeout
+            .readTimeout(10, TimeUnit.SECONDS) // read timeout
             .retryOnConnectionFailure(true)
             .dispatcher(dispatcher)
             .build()

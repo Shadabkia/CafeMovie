@@ -95,8 +95,13 @@ dependencies {
     // Glide
     implementation (libs.glide)
     annotationProcessor (libs.compiler)
+    implementation("io.coil-kt:coil:1.4.0")
+
 
     // Paging 3
     implementation(libs.androidx.paging.runtime.ktx)
+
+    // Swiprefreshlayout
+    implementation (libs.androidx.swiperefreshlayout)
 
 }

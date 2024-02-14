@@ -50,9 +50,10 @@ class MovieViewHolder(
                 rbRate.rating = it/2
             }
 
+
             Glide
                 .with(context)
-                .load("https://image.tmdb.org/t/p/w200"+movie.posterPath)
+                .load("https://image.tmdb.org/t/p/w92"+movie.posterPath)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)

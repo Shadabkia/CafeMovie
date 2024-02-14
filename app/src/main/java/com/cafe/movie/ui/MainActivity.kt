@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import com.cafe.movie.R
 import com.cafe.movie.data.network.dto.Movie
 import com.cafe.movie.data.network.dto.MovieListResponse
@@ -20,6 +21,7 @@ import com.cafe.movie.ui.adapter.MoviesAdapter
 import com.cafe.movie.utils.MoshiHelper
 import com.cafe.movie.utils.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -77,6 +79,28 @@ class MainActivity : AppCompatActivity(), MovieListener{
                     footer = PagingLoadStateAdapter(movieAdapter)
                 )
             }
+
+            swipeRefresh.setOnRefreshListener {
+                movieAdapter.refresh()
+            }
+
+            lifecycleScope.launch {
+                movieAdapter.loadStateFlow.collectLatest {
+                    Timber.tag("movieadapter").d("loadStateFlow ${movieAdapter.loadStateFlow}")
+                    swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+                }
+            }
+
+            movieAdapter.addLoadStateListener { loadState ->
+                if (loadState.append.endOfPaginationReached) {
+                    Timber.tag("movieadapter").d("addLoadStateListener")
+//                    binding.srlEmptyList.isVisible = transactionAdapter.itemCount < 1
+//                    binding.appbar.isVisible = transactionAdapter.itemCount > 0
+//                    binding.nsvTransaction.isVisible = transactionAdapter.itemCount > 0
+                }
+            }
+
+
         }
     }
 
