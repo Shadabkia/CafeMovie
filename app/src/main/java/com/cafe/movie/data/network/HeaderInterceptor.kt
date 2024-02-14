@@ -1,10 +1,11 @@
 package com.cafe.movie.data.network
+
 import com.cafe.movie.data.local.*
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 
-class HeaderInterceptor(): Interceptor {
+class HeaderInterceptor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
@@ -13,12 +14,10 @@ class HeaderInterceptor(): Interceptor {
             CONTENT_TYPE_HEADER_KEY, APPLICATION_JSON_HEADER_KEY
         )
 
-        ACCESS_TOKEN.let {
-            requestBuilder.addHeader(
-                AUTHORIZATION_HEADER_KEY, TOKEN_PREFIX + it
-            )
-            Timber.tag("okhttp Header: ").i("Token: Bearer $it")
-        }
+        requestBuilder.addHeader(
+            AUTHORIZATION_HEADER_KEY, TOKEN_PREFIX + ACCESS_TOKEN
+        )
+        Timber.tag("okhttp Header: ").i("Token: Bearer $ACCESS_TOKEN")
 
         val request = requestBuilder.build()
 

@@ -28,53 +28,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.movies.collect { list ->
                 if (list != null) {
                     Toast.makeText(this@MainActivity, "list", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@MainActivity, "null", Toast.LENGTH_SHORT).show()
                 }
             }
 
         }
-
-        findViewById<TextView>(R.id.text).setOnClickListener {
-            testMoshi()
-        }
-
         Timber.tag("moooshi").d("onCreate: ")
-
-    }
-
-    private fun testMoshi() {
-        val d = Log.d("moooshi", "testMoshi: ")
-
-        val movie = Movie(
-            adult = false,
-            backdropPath = null,
-            genreIds = null,
-            id = 0,
-            originalLanguage = null,
-            originalTitle = null,
-            overview = null,
-            popularity = 0.0,
-            posterPath = null,
-            releaseDate = null,
-            title = null,
-            video = false,
-            voteAverage = 0.0,
-            voteCount = 0
-        )
-
-        val movieListResponse = MovieListResponse(
-            page = 90,
-            movies = List(1) { movie },
-            totalPages = 0,
-            totalResults = 0
-        )
-
-        val moshiHelper = MoshiHelper
-
-        var json =
-            moshiHelper.getInstance().moshiToJson(movieListResponse, MovieListResponse::class.java)
-
-        Log.d("moooshi", "json: $json")
     }
 }
