@@ -23,6 +23,7 @@ lifecycle-runtime-ktx = "2.6.2"
 #navigation-compose = "2.7.5"
 #coil-compose = "2.5.0"
 kotlin-parcelize = "1.8.10"
+paging-runtime-ktx = "3.2.1"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 logging-interceptor = "4.12.0"
@@ -49,6 +50,7 @@ androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name =
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging-runtime-ktx" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }

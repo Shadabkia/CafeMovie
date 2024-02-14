@@ -12,7 +12,7 @@
             android:layout_marginEnd="@dimen/margin_medium"
             android:id="@+id/cv_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             app:cardElevation="6dp"
             android:layout_marginTop="@dimen/margin_medium"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/fake_img"
+                android:src="@drawable/fake_poster"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

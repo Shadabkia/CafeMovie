@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CafeMovie</string>
+    <string name="internet_not_connected">internet not connected</string>
+    <string name="retry">try again\n</string>
 </resources>

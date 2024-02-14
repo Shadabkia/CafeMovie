@@ -95,4 +95,8 @@ dependencies {
     // Glide
     implementation (libs.glide)
     annotationProcessor (libs.compiler)
+
+    // Paging 3
+    implementation(libs.androidx.paging.runtime.ktx)
+
 }

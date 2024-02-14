@@ -3,6 +3,7 @@ package com.cafe.movie.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowMetrics
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -17,6 +18,7 @@ import com.cafe.movie.databinding.ActivityMainBinding
 import com.cafe.movie.ui.adapter.MovieListener
 import com.cafe.movie.ui.adapter.MoviesAdapter
 import com.cafe.movie.utils.MoshiHelper
+import com.cafe.movie.utils.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -53,10 +55,10 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
     private fun initViews() {
         lifecycleScope.launch {
-            viewModel.movies.collect { list ->
-                if (list != null) {
+            viewModel.movies.collect {
+                if (it != null) {
                     Toast.makeText(this@MainActivity, "list", Toast.LENGTH_SHORT).show()
-                    movieAdapter.submitList(list.movies)
+                    movieAdapter.submitData(it)
                 }
             }
         }
@@ -65,6 +67,15 @@ class MainActivity : AppCompatActivity(), MovieListener{
             rvMovies.apply {
                 adapter = movieAdapter
                 itemAnimator = null
+                postponeEnterTransition()
+                viewTreeObserver.addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
+
+                adapter = movieAdapter.withLoadStateFooter(
+                    footer = PagingLoadStateAdapter(movieAdapter)
+                )
             }
         }
     }

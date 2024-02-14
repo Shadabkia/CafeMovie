@@ -2,15 +2,20 @@ package com.cafe.movie.ui.adapter.viewHolder
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cafe.movie.R
 import com.cafe.movie.data.network.dto.Movie
 import com.cafe.movie.databinding.ItemMovieBinding
+import com.cafe.movie.ui.MainActivity
 import com.cafe.movie.ui.adapter.MovieListener
+import com.cafe.movie.utils.toDp
+import timber.log.Timber
 
 class MovieViewHolder(
     private val binding: ItemMovieBinding,
@@ -32,16 +37,22 @@ class MovieViewHolder(
 
     @SuppressLint("SetTextI18n")
     fun bind(movie: Movie) {
-        binding.apply {
 
+//        val screenWidth = context.resources.displayMetrics.widthPixels.toFloat().toDp
+//        val itemWidth = (screenWidth - 64) / 3
+//        Timber.tag("heights").d("itemWidth $itemWidth")
+
+        binding.apply {
 
             tvMovieTitle.text = movie.title
 
-            rbRate.rating = movie.voteAverage?.toFloat()!!
+            movie.voteAverage?.let {
+                rbRate.rating = it/2
+            }
 
             Glide
                 .with(context)
-                .load("https://image.tmdb.org/t/p/w300"+movie.posterPath)
+                .load("https://image.tmdb.org/t/p/w200"+movie.posterPath)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)

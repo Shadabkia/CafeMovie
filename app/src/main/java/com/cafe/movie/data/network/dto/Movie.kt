@@ -29,7 +29,7 @@ data class Movie(
     @Json(name = "video")
     val video: Boolean?,
     @Json(name = "vote_average")
-    val voteAverage: Double?,
+    val voteAverage: Float?,
     @Json(name = "vote_count")
     val voteCount: Int?
 )
