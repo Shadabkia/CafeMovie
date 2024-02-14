@@ -2,6 +2,7 @@ package com.cafe.movie.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -13,17 +14,21 @@ import com.cafe.movie.R
 import com.cafe.movie.data.network.dto.Movie
 import com.cafe.movie.data.network.dto.MovieListResponse
 import com.cafe.movie.databinding.ActivityMainBinding
+import com.cafe.movie.ui.adapter.MovieListener
+import com.cafe.movie.ui.adapter.MoviesAdapter
 import com.cafe.movie.utils.MoshiHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MovieListener{
 
     private val viewModel by viewModels<MainViewModel>()
 
     private lateinit var binding: ActivityMainBinding
+
+    val movieAdapter = MoviesAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +56,20 @@ class MainActivity : AppCompatActivity() {
             viewModel.movies.collect { list ->
                 if (list != null) {
                     Toast.makeText(this@MainActivity, "list", Toast.LENGTH_SHORT).show()
+                    movieAdapter.submitList(list.movies)
                 }
             }
         }
+
+        binding.apply {
+            rvMovies.apply {
+                adapter = movieAdapter
+                itemAnimator = null
+            }
+        }
+    }
+
+    override fun onMovieClicked(view: View, movieId: Int?) {
+
     }
 }
