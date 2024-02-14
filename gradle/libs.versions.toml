@@ -2,9 +2,11 @@
 activity-ktx = "1.8.2"
 agp = "8.1.2"
 appcompat = "1.6.1"
+compiler = "4.13.0"
 constraintlayout = "2.1.4"
 datastore-preferences = "1.0.0"
 fragment-ktx = "1.6.2"
+glide = "4.15.1"
 kotlin-reflect = "1.8.22"
 material = "1.11.0"
 moshi-kotlin = "1.12.0"
@@ -47,6 +49,7 @@ androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name =
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 
@@ -56,6 +59,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-com
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-compiler" }
 
 #retrofit
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin-reflect" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi-kotlin" }

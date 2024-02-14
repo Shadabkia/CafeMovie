@@ -40,6 +40,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -86,6 +91,8 @@ dependencies {
 
     // Timber for logging
     implementation(libs.timber)
-    
-    
+
+    // Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 }

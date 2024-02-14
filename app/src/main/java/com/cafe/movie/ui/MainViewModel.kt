@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.cafe.movie.data.network.Result
 import com.cafe.movie.data.network.dto.MovieListResponse
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -17,6 +19,13 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val movies = MutableStateFlow<MovieListResponse?>(null)
+
+    private val mainActivityEventsChannel = Channel<MainActivityEvents>()
+    val mainActivityEvents = mainActivityEventsChannel.receiveAsFlow()
+
+    fun activityCreated() = viewModelScope.launch {
+        mainActivityEventsChannel.send(MainActivityEvents.InitViews)
+    }
 
     init {
         getMovieList(1)

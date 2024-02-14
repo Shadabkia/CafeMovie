@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#1279FF</color>
+    <color name="colorPrimaryDark">#023980</color>
+    <color name="colorAccent">#FFA200</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#E9E9EB</color>
+    <color name="ripple_gray">#B6B6B6</color>
+    <color name="base_gray">#8F8F8F</color>
+    <color name="soft_gray">#999598</color>
+    <color name="orange">#FFA200</color>
+    <color name="yellow">#FFB941</color>
+    <color name="blue_1">#1279FF</color>
+    <color name="ripple_blue">#D2E3FB</color>
+    <color name="dark_gray">#1A1A1C</color>
+    <color name="success">#00E900</color>
+    <color name="red">#FF2929</color>
+
 </resources>
