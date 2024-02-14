@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface MovieService {
 
-      @GET
+      @GET("/discover/movie")
     suspend fun getMovieList(
         @retrofit2.http.Query("page") page: Int,
         @retrofit2.http.Query("release_date.gte") minDate: String,
