@@ -58,10 +58,19 @@ dependencies {
 //    implementation(libs.gson)
     implementation(libs.converter.moshi)
 
-
     // Add logging in api
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
 
     // Hilt
     implementation(libs.hilt.android)

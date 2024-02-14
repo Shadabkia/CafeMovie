@@ -13,7 +13,8 @@ class HeaderInterceptor(): Interceptor {
             CONTENT_TYPE_HEADER_KEY, APPLICATION_JSON_HEADER_KEY
         )
 
-        "token".let {
+        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZTU0Y2Q1MTYxZGQ5ZWY5MjVjNzU2ODlmYWVhNDM2YyIsInN1YiI6IjY1Y2FkOWJjODliNTYxMDE4NDY4Y2Q2OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HFxnSzJ8FpABnzUhN9ig1f2zcvEi_39NOdeIR6cG5BQ"
+            .let {
             requestBuilder.addHeader(
                 AUTHORIZATION_HEADER_KEY, TOKEN_PREFIX + it
             )
