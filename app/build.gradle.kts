@@ -56,13 +56,11 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-//    implementation(libs.gson)
 
     // Moshi
     implementation (libs.converter.moshi)
     implementation (libs.moshi)
     implementation (libs.moshi.kotlin)
-
 
     // To Implement Fragment Listener
     implementation(libs.androidx.fragment.ktx)
