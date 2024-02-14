@@ -1,12 +1,15 @@
 package com.cafe.movie.data.network
 
-import com.google.gson.annotations.SerializedName
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class ErrorResponse(
-    @SerializedName("code")
-    val code: String,
-    @SerializedName("message")
-    val message: List<String>,
-    @SerializedName("timeStamp")
-    val timeStamp: String
+    @Json(name = "status_code")
+    val statusCode: Int?,
+    @Json(name = "status_message")
+    val statusMessage: String?,
+    @Json(name = "success")
+    val success: Boolean?
 )

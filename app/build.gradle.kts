@@ -51,12 +51,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation (libs.kotlin.reflect)
 
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 //    implementation(libs.gson)
-    implementation(libs.converter.moshi)
+
+    // Moshi
+    implementation (libs.converter.moshi)
+    implementation (libs.moshi)
+    implementation (libs.moshi.kotlin)
+
+
+    // To Implement Fragment Listener
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.activity.ktx)
 
     // Add logging in api
     implementation(libs.okhttp)

@@ -32,7 +32,7 @@ abstract class SafeApiRequest {
                                 val message = Gson().fromJson(
                                     errorBody.stringSuspending(),
                                     ErrorResponse::class.java
-                                )?.message?.fold("") { acc, s -> if (acc.isBlank()) s else "$acc\n$s" }
+                                )?.statusMessage?.fold("") { acc, s -> if (acc.isBlank()) s.toString() else "$acc\n$s" }
                                     ?: "An unexpected error occurred"
 
                                 Timber.e("Error message: $message")
