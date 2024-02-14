@@ -1,4 +1,4 @@
-package com.cafe.movie.data.network.models
+package com.cafe.movie.data.network.dto
 
 
 import com.squareup.moshi.Json

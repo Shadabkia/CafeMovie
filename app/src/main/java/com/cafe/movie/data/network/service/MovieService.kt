@@ -1,14 +1,12 @@
 package com.cafe.movie.data.network.service
 
-import com.cafe.movie.data.network.models.MovieListResponse
+import com.cafe.movie.data.network.dto.MovieListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface MovieService {
 
-    // type a retrofit fun with GET method by this api
-    //https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_release_type=2|3&release_date.gte={min_date}&release_date.lte={max_date}
-    @GET
+      @GET
     suspend fun getMovieList(
         @retrofit2.http.Query("page") page: Int,
         @retrofit2.http.Query("release_date.gte") minDate: String,
