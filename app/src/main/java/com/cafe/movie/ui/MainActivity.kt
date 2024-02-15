@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.cafe.movie.databinding.ActivityMainBinding
 import com.cafe.movie.ui.adapter.MovieListener
 import com.cafe.movie.ui.adapter.MoviesAdapter
+import com.cafe.movie.utils.CoreUtils
 import com.cafe.movie.utils.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity(), MovieListener{
                     swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
 
                     clTryAgain.isVisible = it.append is LoadState.Error
+                    Timber.tag("loadStateFlow").d("append ${it.append} prepend ${it.prepend} refresh ${it.refresh}")
                     pbLoadMore.isVisible = it.append is LoadState.Loading
 
                 }
@@ -97,6 +99,7 @@ class MainActivity : AppCompatActivity(), MovieListener{
             movieAdapter.addLoadStateListener { loadState ->
                 if (loadState.append.endOfPaginationReached) {
                     Timber.tag("append").d("addLoadStateListener ${loadState.append.endOfPaginationReached}")
+
 //                    binding.srlEmptyList.isVisible = transactionAdapter.itemCount < 1
 //                    binding.appbar.isVisible = transactionAdapter.itemCount > 0
 //                    binding.nsvTransaction.isVisible = transactionAdapter.itemCount > 0

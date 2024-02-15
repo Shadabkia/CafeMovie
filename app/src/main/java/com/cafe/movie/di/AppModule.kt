@@ -20,8 +20,4 @@ object AppModule {
         return app as CafeMovieApplication
     }
 
-    @Singleton
-    @Provides
-    fun provideGson() = Gson()
-
 }

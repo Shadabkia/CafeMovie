@@ -21,14 +21,21 @@ class MovieListPagingSource(
 
             val movies = if (response.isSuccessful)
                 response.body()!!.movies
-            else
+            else {
                 emptyList()
+            }
 
-            LoadResult.Page(
-                data = movies!!,
-                prevKey = if (position == STARTING_PAGE_INDEX) null else position - size,
-                nextKey = if (movies.isEmpty()) null else position + size
-            )
+            if(movies.isEmpty()){
+                return LoadResult.Error(Exception("No Data"))
+            } else {
+                LoadResult.Page(
+                    data = movies!!,
+                    prevKey = if (position == STARTING_PAGE_INDEX) null else position - size,
+                    nextKey = if (movies.isEmpty()) null else position + size
+                )
+            }
+
+
 
         } catch (exception: IOException) {
             LoadResult.Error(exception)

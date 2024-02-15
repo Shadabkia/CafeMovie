@@ -1,28 +1,14 @@
-package com.cafe.movie.data.network
+package com.cafe.movie.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.widget.Toast
-import okhttp3.Interceptor
-import okhttp3.Response
 
-@Suppress("DEPRECATION")
-class NetworkConnectionInterceptor(
-    context: Context
-) : Interceptor {
+object CoreUtils {
+     fun isInternetAvailable(context: Context): Boolean {
 
-    private val applicationContext = context.applicationContext
-
-    override fun intercept(chain: Interceptor.Chain): Response {
-
-        if (!isInternetAvailable())
-            throw NoInternetException("Make Sure You Have Internet Connection")
-        return chain.proceed(chain.request())
-    }
-
-    private fun isInternetAvailable(): Boolean {
+        val applicationContext = context.applicationContext
 
         var result = false
 

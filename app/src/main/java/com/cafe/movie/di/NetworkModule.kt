@@ -1,5 +1,6 @@
 package com.cafe.movie.di
 
+import com.cafe.movie.data.network.CacheInterceptor
 import com.cafe.movie.CafeMovieApplication
 import com.cafe.movie.data.local.BASE_URL
 import com.cafe.movie.data.network.HeaderInterceptor
@@ -11,6 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,6 +48,11 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideCacheInterceptor(application: CafeMovieApplication) =
+        CacheInterceptor(application)
+
+    @Singleton
+    @Provides
     fun provideNetworkConnectionInterceptor(context: CafeMovieApplication) =
         NetworkConnectionInterceptor(context = context)
 
@@ -54,14 +61,21 @@ object NetworkModule {
     fun provideHttpClient(
         logging: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
+        cacheInterceptor: CacheInterceptor,
         networkConnectionInterceptor: NetworkConnectionInterceptor,
-        dispatcher: Dispatcher
+        dispatcher: Dispatcher,
+        application: CafeMovieApplication
     ): OkHttpClient {
 
+        val cacheSize = (50 * 1024 * 1024).toLong()
+        val myCache = Cache(application.cacheDir, cacheSize)
+
         return OkHttpClient.Builder()
+            .cache(myCache)
             .addInterceptor(logging)
             .addInterceptor(headerInterceptor)
-            .addInterceptor(networkConnectionInterceptor)
+//            .addInterceptor(networkConnectionInterceptor)
+            .addInterceptor(cacheInterceptor)
             .connectTimeout(10, TimeUnit.SECONDS) // connect timeout
             .writeTimeout(10, TimeUnit.SECONDS) // write timeout
             .readTimeout(10, TimeUnit.SECONDS) // read timeout
