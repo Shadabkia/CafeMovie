@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
     private val movieAdapter = MoviesAdapter(this)
 
+    private var spanCount = 3;
+    private val layoutManager =  GridLayoutManager(this,spanCount)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -54,6 +58,20 @@ class MainActivity : AppCompatActivity(), MovieListener{
         viewModel.activityCreated()
 
         Timber.tag("moooshi").d("onCreate: ")
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            spanCount = 6; // Set span count for landscape orientation
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            spanCount = 3; // Set span count for portrait orientation
+        }
+
+        layoutManager.spanCount = spanCount
+        binding.rvMovies.layoutManager = layoutManager
+
     }
 
     private fun initViews() {

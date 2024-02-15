@@ -2,20 +2,15 @@ package com.cafe.movie.ui.adapter.viewHolder
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cafe.movie.R
 import com.cafe.movie.data.network.dto.Movie
 import com.cafe.movie.databinding.ItemMovieBinding
-import com.cafe.movie.ui.MainActivity
 import com.cafe.movie.ui.adapter.MovieListener
-import com.cafe.movie.utils.toDp
-import timber.log.Timber
 
 class MovieViewHolder(
     private val binding: ItemMovieBinding,
