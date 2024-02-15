@@ -67,8 +67,6 @@ class MainActivity : AppCompatActivity(), MovieListener{
             }
         }
 
-
-
         binding.apply {
             rvMovies.apply {
                 itemAnimator = null
@@ -80,29 +78,29 @@ class MainActivity : AppCompatActivity(), MovieListener{
                 adapter = movieAdapter
             }
 
+            btRetry.setOnClickListener {
+                movieAdapter.refresh()
+            }
+
             swipeRefresh.setOnRefreshListener {
+                swipeRefresh.isRefreshing = false
                 movieAdapter.refresh()
             }
 
             lifecycleScope.launch {
                 movieAdapter.loadStateFlow.collectLatest {
                     Timber.tag("movieadapter").d("loadStateFlow $it")
-                    swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+                    binding.clLogoLoading.isVisible = it.refresh is LoadState.Loading
 
                     clTryAgain.isVisible = it.append is LoadState.Error
                     Timber.tag("loadStateFlow").d("append ${it.append} prepend ${it.prepend} refresh ${it.refresh}")
                     pbLoadMore.isVisible = it.append is LoadState.Loading
 
-                }
-            }
+                    if(it.refresh is LoadState.Error ) {
+                        clError.isVisible = (it.refresh as LoadState.Error).error.message == "No Data"
+                    } else
+                        clError.isVisible = false
 
-            movieAdapter.addLoadStateListener { loadState ->
-                if (loadState.append.endOfPaginationReached) {
-                    Timber.tag("append").d("addLoadStateListener ${loadState.append.endOfPaginationReached}")
-
-//                    binding.srlEmptyList.isVisible = transactionAdapter.itemCount < 1
-//                    binding.appbar.isVisible = transactionAdapter.itemCount > 0
-//                    binding.nsvTransaction.isVisible = transactionAdapter.itemCount > 0
                 }
             }
         }

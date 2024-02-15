@@ -71,4 +71,8 @@
         <item name="android:textColor">@color/dark_gray</item>
     </style>
 
+    <style name="progressBarBlue" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>
