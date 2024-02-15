@@ -3,15 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?android:attr/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discover"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingVertical="16dp"
+            android:textColor="@color/red"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_appbar_logo"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/bazar_logo"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         app:layout_constraintBottom_toTopOf="@+id/cl_load_more_error"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -35,8 +67,9 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/cl_load_more_error"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -53,6 +86,8 @@
 
         <Button
             android:id="@+id/bt_load_more_try"
+            style="@style/buttonBorderColorStyle"
+            android:textStyle="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -76,7 +111,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_logo_loading"
         android:layout_width="match_parent"
-        android:background="@color/dark_gray"
+        tools:visibility="gone"
+        android:background="?android:attr/colorBackground"
         android:layout_height="match_parent"
         android:elevation="5dp">
 
@@ -106,7 +142,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_main_error"
         android:layout_width="match_parent"
-        android:background="@color/dark_gray"
+        android:background="?android:attr/colorBackground"
         android:visibility="gone"
         android:layout_height="match_parent"
         android:elevation="5dp">
@@ -128,7 +164,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Connection glitch"
-            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_error" />
@@ -153,6 +188,7 @@ connection problem."
             android:layout_marginTop="16dp"
             android:backgroundTint="#1C3051"
             android:text="@string/try_again"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_error_des" />
