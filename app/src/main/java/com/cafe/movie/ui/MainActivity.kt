@@ -1,29 +1,28 @@
 package com.cafe.movie.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.WindowMetrics
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import com.cafe.movie.R
-import com.cafe.movie.data.network.dto.Movie
-import com.cafe.movie.data.network.dto.MovieListResponse
+import androidx.paging.LoadStates
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.cafe.movie.databinding.ActivityMainBinding
 import com.cafe.movie.ui.adapter.MovieListener
 import com.cafe.movie.ui.adapter.MoviesAdapter
-import com.cafe.movie.utils.MoshiHelper
 import com.cafe.movie.utils.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MovieListener{
@@ -56,28 +55,28 @@ class MainActivity : AppCompatActivity(), MovieListener{
     }
 
     private fun initViews() {
+
+        initListeners()
+
         lifecycleScope.launch {
             viewModel.movies.collect {
                 if (it != null) {
-                    Toast.makeText(this@MainActivity, "list", Toast.LENGTH_SHORT).show()
                     movieAdapter.submitData(it)
                 }
             }
         }
 
+
+
         binding.apply {
             rvMovies.apply {
-                adapter = movieAdapter
                 itemAnimator = null
                 postponeEnterTransition()
                 viewTreeObserver.addOnPreDrawListener {
                     startPostponedEnterTransition()
                     true
                 }
-
-                adapter = movieAdapter.withLoadStateFooter(
-                    footer = PagingLoadStateAdapter(movieAdapter)
-                )
+                adapter = movieAdapter
             }
 
             swipeRefresh.setOnRefreshListener {
@@ -86,21 +85,31 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
             lifecycleScope.launch {
                 movieAdapter.loadStateFlow.collectLatest {
-                    Timber.tag("movieadapter").d("loadStateFlow ${movieAdapter.loadStateFlow}")
+                    Timber.tag("movieadapter").d("loadStateFlow $it")
                     swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+
+                    clTryAgain.isVisible = it.append is LoadState.Error
+                    pbLoadMore.isVisible = it.append is LoadState.Loading
+
                 }
             }
 
             movieAdapter.addLoadStateListener { loadState ->
                 if (loadState.append.endOfPaginationReached) {
-                    Timber.tag("movieadapter").d("addLoadStateListener")
+                    Timber.tag("append").d("addLoadStateListener ${loadState.append.endOfPaginationReached}")
 //                    binding.srlEmptyList.isVisible = transactionAdapter.itemCount < 1
 //                    binding.appbar.isVisible = transactionAdapter.itemCount > 0
 //                    binding.nsvTransaction.isVisible = transactionAdapter.itemCount > 0
                 }
             }
+        }
+    }
 
-
+    private fun initListeners() {
+        binding.apply {
+            btTry.setOnClickListener{
+                movieAdapter.retry()
+            }
         }
     }
 
