@@ -78,29 +78,20 @@ class MainActivity : AppCompatActivity(), MovieListener{
                 adapter = movieAdapter
             }
 
-            btRetry.setOnClickListener {
-                movieAdapter.refresh()
-            }
-
-            swipeRefresh.setOnRefreshListener {
-                swipeRefresh.isRefreshing = false
-                movieAdapter.refresh()
-            }
-
             lifecycleScope.launch {
                 movieAdapter.loadStateFlow.collectLatest {
                     Timber.tag("movieadapter").d("loadStateFlow $it")
-                    binding.clLogoLoading.isVisible = it.refresh is LoadState.Loading
-
-                    clTryAgain.isVisible = it.append is LoadState.Error
                     Timber.tag("loadStateFlow").d("append ${it.append} prepend ${it.prepend} refresh ${it.refresh}")
+
+                    clLogoLoading.isVisible = it.refresh is LoadState.Loading
+
+                    clLoadMoreError.isVisible = it.append is LoadState.Error
                     pbLoadMore.isVisible = it.append is LoadState.Loading
 
                     if(it.refresh is LoadState.Error ) {
-                        clError.isVisible = (it.refresh as LoadState.Error).error.message == "No Data"
+                        clMainError.isVisible = (it.refresh as LoadState.Error).error.message == "No Data"
                     } else
-                        clError.isVisible = false
-
+                        clMainError.isVisible = false
                 }
             }
         }
@@ -108,8 +99,17 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
     private fun initListeners() {
         binding.apply {
-            btTry.setOnClickListener{
+            btLoadMoreTry.setOnClickListener{
                 movieAdapter.retry()
+            }
+
+            btRetry.setOnClickListener {
+                movieAdapter.refresh()
+            }
+
+            swipeRefresh.setOnRefreshListener {
+                swipeRefresh.isRefreshing = false
+                movieAdapter.refresh()
             }
         }
     }

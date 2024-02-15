@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cl_try_again"
+        app:layout_constraintBottom_toTopOf="@+id/cl_load_more_error"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -36,7 +36,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:visibility="gone"
-        android:id="@+id/cl_try_again"
+        android:id="@+id/cl_load_more_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -45,14 +45,14 @@
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/bt_try"
-            app:layout_constraintBottom_toBottomOf="@+id/bt_try"
+            app:layout_constraintTop_toTopOf="@+id/bt_load_more_try"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_load_more_try"
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/internet_not_connected"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/bt_try"
+            android:id="@+id/bt_load_more_try"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -104,7 +104,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_error"
+        android:id="@+id/cl_main_error"
         android:layout_width="match_parent"
         android:background="@color/dark_gray"
         android:visibility="gone"
