@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), MovieListener {
                         clLogoLoading.isVisible = true
                     } else {
                         // prevent repeat animation
-                        if (animationSet == null) {
+                        if (animationSet == null && !clMainError.isVisible) {
                             animateIvLogo()
                         }
                     }
