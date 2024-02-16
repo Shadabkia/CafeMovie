@@ -1,8 +1,18 @@
 package com.cafe.movie.ui
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.res.Configuration
+import android.graphics.drawable.GradientDrawable.Orientation
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +25,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import com.cafe.movie.R
 import com.cafe.movie.databinding.ActivityMainBinding
 import com.cafe.movie.ui.adapter.MovieListener
 import com.cafe.movie.ui.adapter.MoviesAdapter
@@ -27,7 +38,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), MovieListener{
+class MainActivity : AppCompatActivity(), MovieListener {
 
     private val viewModel by viewModels<MainViewModel>()
 
@@ -36,7 +47,7 @@ class MainActivity : AppCompatActivity(), MovieListener{
     private val movieAdapter = MoviesAdapter(this)
 
     private var spanCount = 3;
-    private val layoutManager =  GridLayoutManager(this,spanCount)
+    private val layoutManager = GridLayoutManager(this, spanCount)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,20 +73,23 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        setOrientationSpanCount(newConfig.orientation)
+    }
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    private fun setOrientationSpanCount(orientation: Int){
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             spanCount = 6; // Set span count for landscape orientation
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             spanCount = 3; // Set span count for portrait orientation
         }
 
         layoutManager.spanCount = spanCount
         binding.rvMovies.layoutManager = layoutManager
-
     }
 
     private fun initViews() {
 
+        setOrientationSpanCount(resources.configuration.orientation)
         initListeners()
 
         lifecycleScope.launch {
@@ -99,26 +113,90 @@ class MainActivity : AppCompatActivity(), MovieListener{
 
             lifecycleScope.launch {
                 movieAdapter.loadStateFlow.collectLatest {
-                    Timber.tag("movieadapter").d("loadStateFlow $it")
-                    Timber.tag("loadStateFlow").d("append ${it.append} prepend ${it.prepend} refresh ${it.refresh}")
-
-                    clLogoLoading.isVisible = it.refresh is LoadState.Loading
+                    Timber.tag("loadStateFlow")
+                        .d("append ${it.append} prepend ${it.prepend} refresh ${it.refresh}")
 
                     clLoadMoreError.isVisible = it.append is LoadState.Error
                     pbLoadMore.isVisible = it.append is LoadState.Loading
 
-                    if(it.refresh is LoadState.Error ) {
-                        clMainError.isVisible = (it.refresh as LoadState.Error).error.message == "No Data"
-                    } else
+                    if (it.refresh is LoadState.Error) {
+                        clMainError.isVisible =
+                            (it.refresh as LoadState.Error).error.message == "No Data"
+                    } else {
                         clMainError.isVisible = false
+                    }
+
+                    if (it.refresh is LoadState.Loading) {
+                        clLogoLoading.isVisible = true
+                    } else {
+                        animateIvLogo()
+                    }
                 }
             }
         }
     }
 
+    private fun animateIvLogo() {
+        binding.apply {
+            // Get the position of ivLogo
+            val location1 = IntArray(2)
+            ivLogo.getLocationOnScreen(location1)
+            val x1 = location1[0].toFloat()
+            val y1 = location1[1].toFloat()
+
+            // Get the position of ivAppbarLogo
+            val location2 = IntArray(2)
+            ivAppbarLogo.getLocationOnScreen(location2)
+
+            val x2 = location2[0].toFloat()
+            val y2 = location2[1].toFloat()
+
+            val translateAnimation = TranslateAnimation(
+                Animation.ABSOLUTE,0f,Animation.ABSOLUTE,
+                (0.96*x2).toFloat(), Animation.ABSOLUTE,0f, Animation.ABSOLUTE,
+                (2.12*(y2-y1)).toFloat()
+            ).apply {
+                duration = 1000 // 1 second
+                fillAfter = true // Keeps the result after the animation
+            }
+
+            // Define a ScaleAnimation
+            val scaleAnimation = ScaleAnimation(
+                1f, 0.5f, // X scaling
+                1f, 0.5f, // Y scaling
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot X
+                Animation.RELATIVE_TO_SELF, 0.5f // Pivot Y
+            ).apply {
+                duration = 1000 // 1 second
+                fillAfter = true // Keeps the result after the animation
+            }
+
+            val animationSet = AnimationSet(true).apply {
+                addAnimation(translateAnimation)
+                addAnimation(scaleAnimation)
+            }
+
+            ivLogo.startAnimation(animationSet)
+            animationSet.setAnimationListener(object : AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    clLogoLoading.isVisible = false
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+                }
+
+            })
+        }
+
+    }
+
     private fun initListeners() {
         binding.apply {
-            btLoadMoreTry.setOnClickListener{
+            btLoadMoreTry.setOnClickListener {
                 movieAdapter.retry()
             }
 
