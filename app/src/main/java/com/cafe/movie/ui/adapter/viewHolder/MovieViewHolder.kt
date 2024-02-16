@@ -33,10 +33,6 @@ class MovieViewHolder(
     @SuppressLint("SetTextI18n")
     fun bind(movie: Movie) {
 
-//        val screenWidth = context.resources.displayMetrics.widthPixels.toFloat().toDp
-//        val itemWidth = (screenWidth - 64) / 3
-//        Timber.tag("heights").d("itemWidth $itemWidth")
-
         binding.apply {
 
             tvMovieTitle.text = movie.title
@@ -45,17 +41,17 @@ class MovieViewHolder(
                 rbRate.rating = it/2
             }
 
-
             Glide
                 .with(context)
                 .load("https://image.tmdb.org/t/p/w92"+movie.posterPath)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)
+                .dontAnimate()
                 .into(ivCover)
 
             root.setOnClickListener {
-                listener.onMovieClicked(binding.root, movie.id)
+                listener.onMovieClicked(binding.root, movie.title)
             }
         }
     }

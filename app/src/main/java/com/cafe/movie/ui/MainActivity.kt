@@ -1,36 +1,25 @@
 package com.cafe.movie.ui
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.res.Configuration
-import android.graphics.drawable.GradientDrawable.Orientation
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.LoadStates
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
-import com.cafe.movie.R
 import com.cafe.movie.databinding.ActivityMainBinding
 import com.cafe.movie.ui.adapter.MovieListener
 import com.cafe.movie.ui.adapter.MoviesAdapter
-import com.cafe.movie.utils.CoreUtils
-import com.cafe.movie.utils.PagingLoadStateAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,6 +34,8 @@ class MainActivity : AppCompatActivity(), MovieListener {
     private lateinit var binding: ActivityMainBinding
 
     private val movieAdapter = MoviesAdapter(this)
+
+    private var animationSet: AnimationSet? = null
 
     private var spanCount = 3;
     private val layoutManager = GridLayoutManager(this, spanCount)
@@ -61,7 +52,6 @@ class MainActivity : AppCompatActivity(), MovieListener {
                 viewModel.mainActivityEvents.collect {
                     when (it) {
                         MainActivityEvents.InitViews -> initViews()
-
                     }
                 }
             }
@@ -76,7 +66,7 @@ class MainActivity : AppCompatActivity(), MovieListener {
         setOrientationSpanCount(newConfig.orientation)
     }
 
-    private fun setOrientationSpanCount(orientation: Int){
+    private fun setOrientationSpanCount(orientation: Int) {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             spanCount = 6; // Set span count for landscape orientation
         } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -102,15 +92,16 @@ class MainActivity : AppCompatActivity(), MovieListener {
 
         binding.apply {
             rvMovies.apply {
+                adapter = movieAdapter
                 itemAnimator = null
                 postponeEnterTransition()
                 viewTreeObserver.addOnPreDrawListener {
                     startPostponedEnterTransition()
                     true
                 }
-                adapter = movieAdapter
             }
 
+            // Manage loadings and retry buttons
             lifecycleScope.launch {
                 movieAdapter.loadStateFlow.collectLatest {
                     Timber.tag("loadStateFlow")
@@ -129,7 +120,10 @@ class MainActivity : AppCompatActivity(), MovieListener {
                     if (it.refresh is LoadState.Loading) {
                         clLogoLoading.isVisible = true
                     } else {
-                        animateIvLogo()
+                        // prevent repeat animation
+                        if (animationSet == null) {
+                            animateIvLogo()
+                        }
                     }
                 }
             }
@@ -152,9 +146,9 @@ class MainActivity : AppCompatActivity(), MovieListener {
             val y2 = location2[1].toFloat()
 
             val translateAnimation = TranslateAnimation(
-                Animation.ABSOLUTE,0f,Animation.ABSOLUTE,
-                (0.96*x2).toFloat(), Animation.ABSOLUTE,0f, Animation.ABSOLUTE,
-                (2.12*(y2-y1)).toFloat()
+                Animation.ABSOLUTE, 0f, Animation.ABSOLUTE,
+                (0.96 * x2).toFloat(), Animation.ABSOLUTE, 0f, Animation.ABSOLUTE,
+                (2.12 * (y2 - y1)).toFloat()
             ).apply {
                 duration = 1000 // 1 second
                 fillAfter = true // Keeps the result after the animation
@@ -171,19 +165,20 @@ class MainActivity : AppCompatActivity(), MovieListener {
                 fillAfter = true // Keeps the result after the animation
             }
 
-            val animationSet = AnimationSet(true).apply {
+            animationSet = AnimationSet(true).apply {
                 addAnimation(translateAnimation)
                 addAnimation(scaleAnimation)
             }
 
             ivLogo.startAnimation(animationSet)
-            animationSet.setAnimationListener(object : AnimationListener {
+            animationSet?.setAnimationListener(object : AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
 
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
                     clLogoLoading.isVisible = false
+                    animationSet = null;
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {
@@ -211,7 +206,9 @@ class MainActivity : AppCompatActivity(), MovieListener {
         }
     }
 
-    override fun onMovieClicked(view: View, movieId: Int?) {
-
+    override fun onMovieClicked(view: View, movieTitle: String?) {
+        val snackBar = Snackbar
+            .make(view, movieTitle + "", Snackbar.LENGTH_LONG)
+        snackBar.show()
     }
 }
