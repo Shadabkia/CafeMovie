@@ -1,5 +1,15 @@
 [versions]
+activity-ktx = "1.8.2"
 agp = "8.1.2"
+appcompat = "1.6.1"
+compiler = "4.13.0"
+constraintlayout = "2.1.4"
+datastore-preferences = "1.0.0"
+fragment-ktx = "1.6.2"
+glide = "4.15.1"
+kotlin-reflect = "1.8.22"
+material = "1.11.0"
+moshi-kotlin = "1.12.0"
 org-jetbrains-kotlin-android = "1.9.10"
 kotlinx-coroutines-core = "1.7.3"
 core-ktx = "1.12.0"
@@ -13,6 +23,7 @@ lifecycle-runtime-ktx = "2.6.2"
 #navigation-compose = "2.7.5"
 #coil-compose = "2.5.0"
 kotlin-parcelize = "1.8.10"
+paging-runtime-ktx = "3.2.1"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 logging-interceptor = "4.12.0"
@@ -21,18 +32,29 @@ hilt-android = "2.48.1"
 hilt-compiler = "2.48.1"
 #hilt-navigation-compose = "1.1.0"
 room-compiler = "2.6.1"
+swiperefreshlayout = "1.2.0-alpha01"
+timber = "5.0.1"
 
 [libraries]
 
 #android lifecyle
-#androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-ktx" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment-ktx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 #androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-ktx" }
 
-#androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle-runtime-ktx" }
 #androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-ktx" }
-#androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
-#androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle-runtime-ktx" }
 
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging-runtime-ktx" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 
 #room
@@ -41,6 +63,11 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-com
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-compiler" }
 
 #retrofit
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin-reflect" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi-kotlin" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi-kotlin" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
@@ -61,6 +88,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 #ui compose
 #activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
