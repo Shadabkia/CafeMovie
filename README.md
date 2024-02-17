@@ -2,5 +2,5 @@ Implement a simple project with [themoviedb](https://developer.themoviedb.org/re
 using :
 Hilt, 
 Paging 3,
-FACADE desighn pattern for services,
+FACADE design pattern for services,
 Retrofit cache for working offline
